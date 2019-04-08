@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import Page from '../../components/Page';
-import EscapeGameBridge from './EscapeGameBridge';
 import PrimaryButton from '../../components/PrimaryButton';
 import { setCurrentPage } from '../../router/routerAction';
 import { setHighScore } from './gamePageAction';
@@ -44,14 +43,6 @@ const RetryButton = styled(PrimaryButton)`
   width: 200px;
 `;
 
-const GameBridge = styled(EscapeGameBridge)`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-`;
-
 class GamePage extends React.Component {
   state = {
     status: 'playing',
@@ -60,10 +51,6 @@ class GamePage extends React.Component {
   render() {
     return (
       <Page>
-        <GameBridge
-          status={this.state.status}
-          onDestroyed={this._onDestroyed}
-        />
         {
           this.state.status === 'gameover' && (
             <GameOver>
@@ -90,21 +77,11 @@ class GamePage extends React.Component {
       status: 'playing',
     });
   };
-
-  _onDestroyed = (score) => {
-    this.props.onDestroyed(score);
-    this.setState({
-      status: 'gameover',
-    });
-  };
 }
 
 const mapDispatchToProps = (dispatch) => ({
   onClickTop: () => {
     dispatch(setCurrentPage('top'));
-  },
-  onDestroyed: (score) => {
-    dispatch(setHighScore(score));
   },
 });
 

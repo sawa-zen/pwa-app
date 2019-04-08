@@ -1,5 +1,4 @@
 import React from 'react';
-import { pure } from 'recompose';
 import { connect } from 'react-redux';
 import TopPage from '../pages/topPage/TopPage';
 import GamePage from '../pages/gamePage/GamePage';
@@ -13,11 +12,11 @@ const renderPage = (currentPage) => {
   }
 };
 
-const Router = pure((props) => (
+const Router = (props) => (
   <div>
     { renderPage(props.currentPage) }
   </div>
-));
+);
 
 const mapStateToProps = (state) => ({
   currentPage: state.router.currentPage,
