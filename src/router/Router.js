@@ -13,9 +13,9 @@ const renderPage = (currentPage) => {
 };
 
 const Router = (props) => (
-  <div>
+  <>
     { renderPage(props.currentPage) }
-  </div>
+  </>
 );
 
 const mapStateToProps = (state) => ({

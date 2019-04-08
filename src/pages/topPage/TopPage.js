@@ -2,42 +2,29 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { setCurrentPage } from '../../router/routerAction';
-import Page from '../../components/Page';
-import PrimaryButton from '../../components/PrimaryButton';
-
-const StartButton = styled(PrimaryButton)`
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 60px;
-  margin: auto;
-  width: 200px;
-`;
+import { NavBar, Page, Button, TabBar } from '../../components';
 
 const TopScene = (props) => {
-  const sec = ('000' + Math.floor(props.highScore / 60)).slice(-3);
-  const msec = ('00' + props.highScore % 60).slice(-2);
-  const time = `${sec}.${msec}`;
-
   return (
-    <Page>
+    <Page
+      navBar={(<NavBar title="支払い" />)}
+      tabBar={(<TabBar />)}
+    >
       <StartButton
-        label="START"
-        onClick={props.onClickStart}
+        icon="qrcode"
+        label="QR読み取り"
       />
     </Page>
   );
 };
 
-const mapStateToProps = (state) => ({
-  highScore: state.gamePage.highScore,
-});
+const StartButton = styled(Button)`
+  width: 200px;
+`;
 
-const mapDispatchToProps = (dispatch) => ({
-  onClickStart: () => {
-    dispatch(setCurrentPage('game'));
-  },
-});
+const mapStateToProps = (state) => ({});
+
+const mapDispatchToProps = (dispatch) => ({});
 
 export default connect(
   mapStateToProps,

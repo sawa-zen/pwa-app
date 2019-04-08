@@ -8,7 +8,7 @@ module.exports = {
   output: {
     path: assetsPath,
     publicPath: '/',
-    filename: 'pwa-game-demo.js'
+    filename: 'pwa-app.js'
   },
   module: {
     rules: [
