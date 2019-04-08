@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState }  from 'react';
 import styled from 'styled-components';
 import View from '../View';
 import TabBarItem from './TabBarItem';
@@ -13,7 +13,7 @@ const items = [
     icon: 'wallet',
   },
   {
-  id: 'notification',
+    id: 'notification',
     icon: 'bell',
   },
   {
@@ -22,15 +22,22 @@ const items = [
   },
 ];
 
-const TabBar = () => (
-  <Wrapper>
-    {
-      items.map((item) => (
-        <TabBarItem icon={item.icon} />
-      ))
-    }
-  </Wrapper>
-);
+const TabBar = () => {
+  const [current, setCurrent] = useState('home');
+  return (
+    <Wrapper>
+      {
+        items.map((item) => (
+          <TabBarItem
+            icon={item.icon}
+            onClick={() => setCurrent(item.id)}
+            active={current === item.id}
+          />
+        ))
+      }
+    </Wrapper>
+  );
+}
 
 const Wrapper = styled(View)`
   flex-direction: row;
