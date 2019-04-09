@@ -3,41 +3,33 @@ import styled from 'styled-components';
 import View from '../View';
 import TabBarItem from './TabBarItem';
 
-const items = [
-  {
-    id: 'home',
-    icon: 'home',
-  },
-  {
-    id: 'wallet',
-    icon: 'wallet',
-  },
-  {
-    id: 'notification',
-    icon: 'bell',
-  },
-  {
-    id: 'profile',
-    icon: 'user',
-  },
-];
-
-const TabBar = () => {
+const TabBar = (props) => {
   const [current, setCurrent] = useState('home');
+
+  const handleClick = (key) => {
+    setCurrent(key);
+    props.onChange(key);
+  }
+
   return (
-    <Wrapper>
+    <Wrapper className={props.className}>
       {
-        items.map((item) => (
+        props.routes.map((route) => (
           <TabBarItem
-            icon={item.icon}
-            onClick={() => setCurrent(item.id)}
-            active={current === item.id}
+            key={route.key}
+            icon={route.icon}
+            onClick={() => handleClick(route.key)}
+            active={current === route.key}
           />
         ))
       }
     </Wrapper>
   );
 }
+TabBar.defaultProps = {
+  routes: [],
+  onChange: () => {},
+};
 
 const Wrapper = styled(View)`
   flex-direction: row;

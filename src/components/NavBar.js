@@ -4,10 +4,16 @@ import View from './View';
 import Text from './Text';
 
 const NavBar = (props) => (
-  <Wrapper>
+  <Wrapper className={props.className}>
+    <LeftSide>
+      {props.leftSide}
+    </LeftSide>
     <Title>
-      {props.title || NavBar}
+      {props.title || 'NavBar'}
     </Title>
+    <RightSide>
+      {' '}
+    </RightSide>
   </Wrapper>
 );
 
@@ -22,9 +28,21 @@ const Wrapper = styled(View)`
   background: #FFF;
 `;
 
+const LeftSide = styled(View)`
+  width: 100px;
+  padding-left: 16px;
+`;
+
 const Title = styled(Text)`
+  flex-grow: 1;
   font-size: 16px;
   font-weight: bold;
+  text-align: center;
+`;
+
+const RightSide = styled(View)`
+  width: 100px;
+  padding-right: 16px;
 `;
 
 export default NavBar;

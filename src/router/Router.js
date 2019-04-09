@@ -1,14 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import TopPage from '../pages/topPage/TopPage';
-import GamePage from '../pages/gamePage/GamePage';
+import TopWindow from '../pages/topWindow';
 import { setCurrentPage } from './routerAction';
 
 const renderPage = (currentPage) => {
   switch (currentPage) {
-    case 'start': return <TopPage />;
-    case 'game': return <GamePage />;
-    default: return <TopPage />;
+    case 'start': return <TopWindow />;
+    default: return <TopWindow />;
   }
 };
 

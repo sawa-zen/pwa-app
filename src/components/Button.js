@@ -4,7 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Button = (props) => (
   <Wrapper
+    className={props.className}
     onTouchStart={props.onTouchStart}
+    onClick={props.onClick}
   >
     {props.icon && (<FontIcon icon={props.icon} />)}
     {props.label}
@@ -15,6 +17,7 @@ Button.defaultProps = {
   icon: '',
   label: 'ボタン',
   onTouchStart: () => {},
+  onClick: () => {},
 };
 
 const Wrapper = styled.div`
