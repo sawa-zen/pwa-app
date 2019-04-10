@@ -27,7 +27,6 @@ library.add(
 );
 
 if(!window.matchMedia('(display-mode: standalone)').matches){
-  alert(1);
   viewportUnitsBuggyfill.init();
 
   // 最初に、ビューポートの高さを取得し、0.01を掛けて1%の値を算出して、vh単位の値を取得

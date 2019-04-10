@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import Window from '../Window';
 import NavBar from '../NavBar';
+import View from '../View';
 import TextButton from '../TextButton';
 
 const constraints = {
@@ -10,30 +11,34 @@ const constraints = {
     // スマホのバックカメラを使用
     facingMode: 'environment',
     maxFrameRate: 30,
-    aspectRatio: 1
   }
 };
 
 const CameraView = (props) => {
   const videoRef = useRef(null);
   useEffect(() => {
+    let videoStream;
     try {
       //  カメラの映像を取得
       navigator.mediaDevices.getUserMedia(constraints)
         .then((stream) => {
-          videoRef.current.srcObject = stream;
+          videoStream = stream;
+          videoRef.current.srcObject = videoStream;
         })
         .catch((err) => {
           window.alert(err.name + ': ' + err.message);
         });
     } catch {
     }
+
+    return () => {
+      videoStream.getVideoTracks().forEach((track) => {
+        track.stop();
+      });
+    }
   });
 
-  const [showFlash, setShowFlash] = useState(false);
-
   const handleReleaseShutter = () => {
-    setShowFlash(true);
     // props.onReleaseShutter();
   }
 
@@ -45,50 +50,33 @@ const CameraView = (props) => {
           <TextButton onClick={props.onClickCancel}>キャンセル</TextButton>
         )}
       />
-      <CameraPreview
-        ref={videoRef}
-        autoPlay
-        playsInline
-      />
-      <ShutterButton
-        onClick={handleReleaseShutter}
-      />
-      {
-        showFlash && <Flash />
-      }
+      <PreviewSpace>
+        <CameraPreview
+          ref={videoRef}
+          autoPlay
+          playsInline
+        />
+      </PreviewSpace>
+      <BottomSpace>
+        <ShutterButton
+          onClick={handleReleaseShutter}
+        />
+      </BottomSpace>
     </StyledWindow>
   );
 };
-
-const Flash = styled.div`
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  background: #FFF;
-  opacity: 0;
-  height: 0%;
-
-  animation: flash 500ms ease;
-
-  @keyframes flash {
-    0% { opacity: 0; height: 0%; }
-    10% { opacity: 1; height: 100%; }
-    99% { opacity: 0; height: 100%; }
-    100% { opacity: 0; height: 0%; }
-  }
-`;
 
 const StyledWindow = styled(Window)`
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: 100vh;
-  z-index: 100;
+  height: 100%;
   background: #FFF;
-  justify-content: flex-end;
+  z-index: 100;
+  padding-top: 0;
+  padding-top: constant(safe-area-inset-top);
+  padding-top: env(safe-area-inset-top);
 
   animation: slideIn 300ms ease 0s 1 normal;
 
@@ -99,29 +87,40 @@ const StyledWindow = styled(Window)`
 `;
 
 const StyledNavBar = styled(NavBar)`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+`;
+
+const PreviewSpace = styled(View)`
+  background: #000;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+
+  &:before {
+    display: block;
+    content: '';
+    padding-top: 100%;
+  }
 `;
 
 const CameraPreview = styled.video`
   position: absolute;
-  top: 44px;
-  top: calc(44px + constant(safe-area-inset-top));
-  top: calc(44px + env(safe-area-inset-top));
-  left: 0;
-  right: 0;
-  padding: 0;
   width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  object-fit: cover;
+`;
+
+const BottomSpace = styled(View)`
+  flex: auto;
+  align-items: center;
+  justify-content: center;
 `;
 
 const ShutterButton = styled.div`
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
   width: 60px;
   height: 60px;
   border: 4px solid #CCC;
