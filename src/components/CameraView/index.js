@@ -16,6 +16,7 @@ const constraints = {
 
 const CameraView = (props) => {
   const videoRef = useRef(null);
+  const canvasRef = useRef(null);
   useEffect(() => {
     let videoStream;
     try {
@@ -24,6 +25,10 @@ const CameraView = (props) => {
         .then((stream) => {
           videoStream = stream;
           videoRef.current.srcObject = videoStream;
+          videoRef.current.addEventListener('loadedmetadata', function(e){
+            canvasRef.current.width = videoRef.current.videoWidth;
+            canvasRef.current.height = videoRef.current.videoHeight;
+          });
         })
         .catch((err) => {
           window.alert(err.name + ': ' + err.message);
@@ -39,12 +44,15 @@ const CameraView = (props) => {
   });
 
   const handleReleaseShutter = () => {
+    const ctx = canvasRef.current.getContext('2d');
+    ctx.drawImage(videoRef.current, 0, 0);
+    const base64 = canvasRef.current.toDataURL('');
     // props.onReleaseShutter();
   }
 
   return (
     <StyledWindow>
-      <StyledNavBar
+      <NavBar
         title="写真"
         leftSide={(
           <TextButton onClick={props.onClickCancel}>キャンセル</TextButton>
@@ -55,6 +63,9 @@ const CameraView = (props) => {
           ref={videoRef}
           autoPlay
           playsInline
+        />
+        <CanvasPreview
+          ref={canvasRef}
         />
       </PreviewSpace>
       <BottomSpace>
@@ -86,9 +97,6 @@ const StyledWindow = styled(Window)`
   }
 `;
 
-const StyledNavBar = styled(NavBar)`
-`;
-
 const PreviewSpace = styled(View)`
   background: #000;
   width: 100%;
@@ -114,6 +122,18 @@ const CameraPreview = styled.video`
   object-fit: cover;
 `;
 
+const CanvasPreview = styled.canvas`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  object-fit: cover;
+`;
+
 const BottomSpace = styled(View)`
   flex: auto;
   align-items: center;
@@ -123,7 +143,7 @@ const BottomSpace = styled(View)`
 const ShutterButton = styled.div`
   width: 60px;
   height: 60px;
-  border: 4px solid #CCC;
+  border: 8px solid #CCC;
   border-radius: 50%;
   transition-duration: 200ms;
 
