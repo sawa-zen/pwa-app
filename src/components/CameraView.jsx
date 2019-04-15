@@ -12,12 +12,12 @@ class CameraView extends React.Component {
     video: {
       facingMode: 'environment',
       maxFrameRate: 30,
-      width: {
-        exact: 1080
-      },
-      height: {
-        exact: 1080
-      },
+      // width: {
+      //   exact: 1080
+      // },
+      // height: {
+      //   exact: 1080
+      // },
     }
   }
 
