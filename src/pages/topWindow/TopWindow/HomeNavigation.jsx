@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {
   NavigationView,
   Button,
-  CameraView,
+  CameraWindow,
 } from '../../../components';
 
 const HomeNavigation = (props) => {
@@ -12,8 +12,19 @@ const HomeNavigation = (props) => {
     setShowCamera,
   ] = useState(false);
 
+  const [
+    currentImage,
+    setImage,
+  ] = useState('');
+
+  const handleSelectImage = (base64) => {
+    setImage(base64);
+    setShowCamera(false);
+  }
+
   return (
     <NavigationView title='ホーム'>
+      <PreviewImage src={currentImage} alt=""/>
       <CameraButton
         icon="camera"
         label="写真を撮る"
@@ -21,15 +32,20 @@ const HomeNavigation = (props) => {
       />
       {
         showCamera && (
-          <CameraView
+          <CameraWindow
             onClickCancel={() => setShowCamera(false)}
-            onReleaseShutter={() => setShowCamera(false)}
+            onSelect={handleSelectImage}
           />
         )
       }
     </NavigationView>
   );
 }
+
+const PreviewImage = styled.img`
+  width: 100%;
+  height: auto;
+`;
 
 const CameraButton = styled(Button)`
 `;

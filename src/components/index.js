@@ -5,4 +5,5 @@ export { default as TabBar } from './TabBar';
 export { default as Window } from './Window';
 export { default as TabBarView } from './TabBarView';
 export { default as NavigationView } from './NavigationView';
+export { default as CameraWindow } from './CameraWindow';
 export { default as CameraView } from './CameraView';

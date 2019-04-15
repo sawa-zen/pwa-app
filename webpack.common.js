@@ -4,7 +4,7 @@ const projectRootPath = path.resolve(__dirname, './');
 const assetsPath = path.resolve(projectRootPath, './public');
 
 module.exports = {
-  entry: `${__dirname}/src/index.js`,
+  entry: `${__dirname}/src/index.jsx`,
   output: {
     path: assetsPath,
     publicPath: '/',
@@ -13,7 +13,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js?$/,
+        test: /\.jsx?$/,
         loader: 'babel-loader',
         options: {
           compact: false,
@@ -22,5 +22,8 @@ module.exports = {
         exclude: /node_modules/,
       },
     ],
+  },
+  resolve: {
+    extensions: ['.js', '.jsx']
   },
 };
