@@ -12,6 +12,12 @@ class CameraView extends React.Component {
     video: {
       facingMode: 'environment',
       maxFrameRate: 30,
+      width: {
+        exact: 1080
+      },
+      height: {
+        exact: 1080
+      },
     }
   }
 
@@ -72,6 +78,9 @@ class CameraView extends React.Component {
           onLoadedMetadata={this._onLoadedMetadata}
           playsInline
         />
+        {
+          this.props.mode === 'camera' && <CardFrame />
+        }
       </Wrapper>
     );
   }
@@ -100,6 +109,19 @@ const CameraPreview = styled.video`
   left: 0;
   margin: auto;
   object-fit: cover;
+`;
+
+const CardFrame = styled(View)`
+  position: absolute;
+  width: 90%;
+  height: 56%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  border: 2px solid #FFF;
+  border-radius: 20px;
 `;
 
 export default CameraView;

@@ -48,6 +48,7 @@ const PreviewImage = styled.img`
 `;
 
 const CameraButton = styled(Button)`
+  margin: 48px;
 `;
 
 export default HomeNavigation;
