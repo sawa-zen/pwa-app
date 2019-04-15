@@ -7,3 +7,5 @@ export { default as TabBarView } from './TabBarView';
 export { default as NavigationView } from './NavigationView';
 export { default as CameraWindow } from './CameraWindow';
 export { default as CameraView } from './CameraView';
+export { default as QRReaderWindow } from './QRReaderWindow';
+export { default as QRReaderView } from './QRReaderView';

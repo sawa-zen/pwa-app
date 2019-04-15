@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import jsQR from "jsqr";
 import View from './View';
 
-class CameraView extends React.Component {
+class QRReaderView extends React.Component {
+  _intervalID = null;
   _wrapperRef = React.createRef();
   _videoRef = React.createRef();
   _canvas = document.createElement('canvas');
@@ -13,10 +15,10 @@ class CameraView extends React.Component {
       facingMode: 'environment',
       maxFrameRate: 30,
       // width: {
-      //   exact: 1080
+      //   exact: 720
       // },
       // height: {
-      //   exact: 1080
+      //   exact: 720
       // },
     }
   }
@@ -29,13 +31,8 @@ class CameraView extends React.Component {
         this._videoRef.current.srcObject = stream;
         this._start();
       })
-  }
 
-  componentWillUpdate(props) {
-    switch (props.mode) {
-      case 'camera': this._start(); break;
-      case 'confirm': this._stop(); break;
-    }
+    this._intervalID = setInterval(this._readQR, 1000);
   }
 
   componentWillUnmount() {
@@ -49,12 +46,15 @@ class CameraView extends React.Component {
     this._videoRef.current.play();
   }
 
-  _stop = () => {
-    this._videoRef.current.pause();
-    this.props.onChange(this._getBase64());
+  _readQR = () => {
+    const imageData = this._getImageData();
+    const code = jsQR(imageData.data, imageData.width, imageData.height);
+    if (code) {
+      alert(code.data);
+    }
   }
 
-  _getBase64 = () => {
+  _getImageData = () => {
     let sx = 0, sy = 0, sw = 0, sh = 0;
     const video = this._videoRef.current;
     sy = (video.videoHeight - video.videoWidth) / 2;
@@ -62,7 +62,7 @@ class CameraView extends React.Component {
 
     const ctx = this._canvas.getContext('2d');
     ctx.drawImage(this._videoRef.current, sx, sy, sw, sh, 0, 0, sw, sh);
-    return this._canvas.toDataURL('');
+    return ctx.getImageData(0, 0, sw, sh);
   }
 
   _onLoadedMetadata = () => {
@@ -73,14 +73,11 @@ class CameraView extends React.Component {
   render() {
     return (
       <Wrapper ref={this._wrapperRef}>
-        <CameraPreview
+        <QRReaderPreview
           ref={this._videoRef}
           onLoadedMetadata={this._onLoadedMetadata}
           playsInline
         />
-        {
-          this.props.mode === 'camera' && <CardFrame />
-        }
       </Wrapper>
     );
   }
@@ -99,7 +96,7 @@ const Wrapper = styled(View)`
   }
 `;
 
-const CameraPreview = styled.video`
+const QRReaderPreview = styled.video`
   position: absolute;
   width: 100%;
   height: 100%;
@@ -111,17 +108,4 @@ const CameraPreview = styled.video`
   object-fit: cover;
 `;
 
-const CardFrame = styled(View)`
-  position: absolute;
-  width: 90%;
-  height: 56%;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  margin: auto;
-  border: 2px solid #FFF;
-  border-radius: 20px;
-`;
-
-export default CameraView;
+export default QRReaderView;
