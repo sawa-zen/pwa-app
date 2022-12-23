@@ -9,7 +9,8 @@ jobs:
     if: github.event.discussion && !github.event.comment
     steps:
       - run: |
-          curl -X POST -d '{
+          curl -X POST -d << EOF
+          {
             "attachments": [
               {
                 "color": "#CCCCCC",
@@ -25,13 +26,15 @@ jobs:
                 ]
               }
             ]
-          }'
+          }
+          EOF
   discussion_commented:
     runs-on: ubuntu-latest
     if: github.event.discussion && github.event.comment
     steps:
       - run: |
-          curl -X POST -d '{
+          curl -X POST -d << EOF
+          {
             "attachments": [
               {
                 "color": "#CCCCCC",
@@ -47,4 +50,5 @@ jobs:
                 ]
               }
             ]
-          }'
+          }
+          EOF
