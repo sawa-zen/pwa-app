@@ -9,10 +9,10 @@ jobs:
     if: github.event.discussion && !github.event.comment
     steps:
       - run: |
-          curl -X POST -d '{ "text": "<${{ github.event.discussion.html_url }}|${{ github.event.discussion.title }}>\n${{ github.event.discussion.body }}" }' ${{ secrets.SLACK_WEBHOOK_URL }}
+          curl -X POST -d '{ "text": "*<${{ github.event.discussion.html_url }}|${{ github.event.discussion.title }}>*\n${{ github.event.discussion.body }}" }' ${{ secrets.SLACK_WEBHOOK_URL }}
   discussion_commented:
     runs-on: ubuntu-latest
     if: github.event.discussion && github.event.comment
     steps:
       - run: |
-          curl -X POST -d '{ "text": "<${{ github.event.discussion.html_url }}|${{ github.event.discussion.title }}>\n${{ github.event.discussion.body }}" }' ${{ secrets.SLACK_WEBHOOK_URL }}
+          curl -X POST -d '{ "text": "*<${{ github.event.discussion.html_url }}|${{ github.event.discussion.title }}>*\n${{ github.event.discussion.body }}" }' ${{ secrets.SLACK_WEBHOOK_URL }}
