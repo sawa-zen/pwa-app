@@ -9,7 +9,9 @@ jobs:
     if: github.event.discussion && !github.event.comment
     steps:
       - run: |
-          curl -X POST -d << EOF
+          curl -X POST ${{ secrets.SLACK_WEBHOOK_URL }} \
+          -H 'Content-Type: application/json' \
+          -d @- << EOF
           {
             "attachments": [
               {
@@ -33,7 +35,9 @@ jobs:
     if: github.event.discussion && github.event.comment
     steps:
       - run: |
-          curl -X POST -d << EOF
+          curl -X POST ${{ secrets.SLACK_WEBHOOK_URL }} \
+          -H 'Content-Type: application/json' \
+          -d @- << EOF
           {
             "attachments": [
               {
