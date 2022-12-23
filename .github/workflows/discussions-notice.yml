@@ -13,7 +13,7 @@ jobs:
           -H 'Content-Type: application/json' \
           -d @- << EOF
           {
-            "text": "<${{ github.event.comment.user.html_url }}|${{ github.event.discussion.user.login }}> が Discussions を作成しました",
+            "text": "*${{ github.event.discussion.user.login }}* が Discussions を作成しました",
             "attachments": [
               {
                 "color": "#CCCCCC",
