@@ -20,7 +20,7 @@ jobs:
                   {
                     "type": "section",
                     "text": {
-                      "type": "plain_text",
+                      "type": "mrkdwn",
                       "text": "<${{ github.event.discussion.html_url }}|${{ github.event.discussion.title }}>\n${{ github.event.discussion.body }}",
                       "emoji": true
                     }
@@ -46,7 +46,7 @@ jobs:
                   {
                     "type": "section",
                     "text": {
-                      "type": "plain_text",
+                      "type": "mrkdwn",
                       "text": "<${{ github.event.discussion.html_url }}|${{ github.event.discussion.title }}>\n${{ github.event.discussion.body }}",
                       "emoji": true
                     }
