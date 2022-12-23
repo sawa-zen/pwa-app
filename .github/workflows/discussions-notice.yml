@@ -13,6 +13,7 @@ jobs:
           -H 'Content-Type: application/json' \
           -d @- << EOF
           {
+            "text": "<${{ github.event.comment.user.html_url }}|${{ github.event.discussion.user.login }}> が Discussions を作成しました",
             "attachments": [
               {
                 "color": "#CCCCCC",
@@ -21,8 +22,7 @@ jobs:
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
-                      "text": "<${{ github.event.discussion.html_url }}|${{ github.event.discussion.title }}>\n${{ github.event.discussion.body }}",
-                      "emoji": true
+                      "text": "*<${{ github.event.discussion.html_url }}|${{ github.event.discussion.title }}>*\n${{ github.event.discussion.body }}",
                     }
                   }
                 ]
@@ -46,7 +46,7 @@ jobs:
                   {
                     "type": "section",
                     "text": {
-                      "type": "mrkdwn",
+                      "type": "plain_text",
                       "text": "<${{ github.event.discussion.html_url }}|${{ github.event.discussion.title }}>\n${{ github.event.discussion.body }}",
                       "emoji": true
                     }
