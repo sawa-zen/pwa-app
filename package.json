@@ -16,9 +16,9 @@
     "url": "https://github.com/topotal/fe-base/issues"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "1.2.19",
-    "@fortawesome/free-solid-svg-icons": "5.9.0",
-    "@fortawesome/react-fontawesome": "0.1.4",
+    "@fortawesome/fontawesome-svg-core": "1.2.36",
+    "@fortawesome/free-solid-svg-icons": "5.15.4",
+    "@fortawesome/react-fontawesome": "0.2.2",
     "i": "0.3.6",
     "jsqr": "1.2.0",
     "npm": "6.9.0",
